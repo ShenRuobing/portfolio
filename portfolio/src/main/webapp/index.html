@@ -2,17 +2,83 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>My Portfolio</title>
+    <title>Ruobing Shen's Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
   <body>
+    <div id="bar">
+    </div>
     <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
+    <div id="basics">
+        <div>
+        <h1>Ruobing Shen</h1>
+        <img src="./images/3.jpg" width="212" height="288">
+        </div>
+        <div id="basics-sub">
+        <h1>About Me</h1>
+        <h2>Education Background</h2>
+            <p> Peking University</p>
+            <p>Bachelor of Computer Science.</p>
+        <h2>Others</h2>
+            <ul>
+            <li>I like eating, sleeping, room escape, travelling...</li>
+            <li>Want to learn dancing and painting in the future if I have time, because dancing girl like Lisa is so attractive.</li>
+            <li>Love beautiful shiny items even if they are useless.</li>
+            <li>Suspense, action and adventure films and books attract me a lot but sometimes sweet and stupid stories also facinate me haha.</li>
+            <li>To learn CS is one of the best decisions I have made.</li>
+            </ul>
+        </div>
+    </div>
+    <h1>Projects</h1>
+    <h3>Probability-Guided Program Reduction(Research project)</h3>
+    <i>2020.02</i>
+    <ul>
+    <li>
+    Given a program P that exhibits a certain property, the goal of program reduction is to minimize P to a smaller variant which still exhibits the same property.
+    </li>
+    <li>
+    This technique can be used in compiler testing, software debloating, etc.
+    </li>
+    <li>
+    We use a novel method which first splits the program into elements under certain granularity and then attaches probability to each element representing their possibility to be reduced. Taking relationship between elements into consideration, we adjust elements' probability according to information we get during the reduction process to achieve smaller reduction time as well as output size.
+    </li>
+    <li>
+    We get better results in terms of speed(reduction time,34.35% accelerated) and quality(size of reduced programs,19.09% smaller) on two recognized benchmarks compared to state-of-art method.
+    </li>
+    </ul>
+    <h3>STEP Intern, Merchants Payment Team,Google, Beijing</h3>                                    
+    <i>2019.07</i>
+    <p>
+    <ul>
+    <li>
+        Handle all the frontend work in a team of three interns.
+    </li>
+    <li>
+    Build a complete system, which can fetch related data from data sources already in Google like GoogleMap, Facebook database, KG, etc,and automatically generate microapps for every merchant onboard Gpay.
+    </li>
+    <li>
+    The generated microapps can display the basic information of merchants as well as their products, users’ reviews, photos, etc, and we provide the support of online payments.
+    </li>
+    <li>
+    The service of “Get a microapp by click a button” can reduce the cost to onboard Gpay for small or medium sized merchants with little ability of developing their own microapps. As a result, it can help Gpay attract more merchants onboard and provide better service for users.
+    </li>
+    </ul>
+    </p>
+    <h1>Fantasy,Cat and Me</h2>
+    <img src="./images/1.jpg" width="345" height="288">
+    <img src="./images/2.jpg" width="275" height="288">
+    <img src="./images/4.JPG" width="225" height="288">
+    
+    <img src="./images/11.JPG" width="424" height="300">
+    <img src="./images/8.JPG" width="424" height="300">
+
+    <img src="./images/9.JPG" width="424" height="576">
+    <img src="./images/10.JPG" width="424" height="576">
+
+    <img src="./images/5.JPG" width="280" height="400">
+    <img src="./images/6.jpg" width="280" height="400">
+    <img src="./images/7.JPG" width="283" height="400">
     </div>
   </body>
 </html>
