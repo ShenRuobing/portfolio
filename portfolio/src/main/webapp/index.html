@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="getData()">
     <div id="bar">
     </div>
     <div id="content">
@@ -30,11 +30,15 @@
             </ul>
         </div>
     </div>
-    <h1>Quotes</h1>
-    <p>Click here to see a random quote:</p>
+    <h1>Comments</h1>
+    <!--p>Click here to see a random quote:</p-->
     <div id="quote-container"></div>
-    <button onclick="getQuote()">Fetch a quote!</button>
-    
+    <!--button onclick="getQuote()">Fetch a quote!</button-->
+    <form action="/data" method="POST">
+      <input type="text" name="comment">
+      <br/><br/>
+      <input type="submit"/>
+    </form>
     <h1>Projects</h1>
     <h3>Probability-Guided Program Reduction(Research project)</h3>
     <i>2020.02</i>
@@ -71,19 +75,8 @@
     </ul>
     </p>
     <h1>Fantasy,Cat and Me</h2>
-    <img src="./images/1.jpg" width="345" height="288">
-    <img src="./images/2.jpg" width="275" height="288">
-    <img src="./images/4.JPG" width="225" height="288">
-    
-    <img src="./images/11.JPG" width="424" height="300">
-    <img src="./images/8.JPG" width="424" height="300">
-
-    <img src="./images/9.JPG" width="424" height="576">
-    <img src="./images/10.JPG" width="424" height="576">
-
-    <img src="./images/5.JPG" width="280" height="400">
-    <img src="./images/6.jpg" width="280" height="400">
-    <img src="./images/7.JPG" width="283" height="400">
+    <div id="pics">
+    </div>
     </div>
   </body>
-</html>
+</html

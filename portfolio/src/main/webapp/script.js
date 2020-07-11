@@ -27,10 +27,25 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
-function getQuote() {
+function getData() {
   fetch('/data').then(response => response.json()).then((data) => {
-    let idx=Math.floor(Math.random()*3);
-    document.getElementById('quote-container').innerText =data.quotes[idx];
+    //console.log(data);
+    let txt="";
+    for(let i=0;i<data.quotes.length;i++)
+        txt+=data.quotes[i]+"\n";
+    //console.log("text is:"+txt);
+    document.getElementById('quote-container').innerText = txt;
+    document.getElementById('pics').innerHTML='\
+    <img src="./images/1.jpg" width="345" height="288">\
+    <img src="./images/2.jpg" width="275" height="288">\
+    <img src="./images/4.JPG" width="225" height="288">\
+    <img src="./images/11.JPG" width="424" height="300">\
+    <img src="./images/8.JPG" width="424" height="300">\
+    <img src="./images/9.JPG" width="424" height="576">\
+    <img src="./images/10.JPG" width="424" height="576">\
+    <img src="./images/5.JPG" width="280" height="400">\
+    <img src="./images/6.jpg" width="280" height="400">\
+    <img src="./images/7.JPG" width="283" height="400">'
   });
 }
 

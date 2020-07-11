@@ -31,11 +31,6 @@ public class DataServlet extends HttpServlet {
   @Override
   public void init() {
     quotes = new ArrayList<>();
-    quotes.add("I'm Ruobing");
-    quotes.add(
-        "A ship in port is safe, but that is not what ships are for. "
-            + "Sail out to sea and do new things. - Grace Hopper");
-    quotes.add("Those who can imagine anything, can create the impossible. - Alan Turing");
   }
 
   @Override
@@ -52,5 +47,14 @@ public class DataServlet extends HttpServlet {
     json+="]}";
     System.out.print(json);  
     response.getWriter().println(json);
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String value = request.getParameter("comment");
+    if (value!="") {
+      quotes.add(value);
+    }
+    response.sendRedirect("/index.html");
   }
 }
