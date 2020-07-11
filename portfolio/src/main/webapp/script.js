@@ -28,7 +28,9 @@ function addRandomGreeting() {
 }
 
 function getQuote() {
-  fetch('/data').then(response => response.text()).then((quote) => {
-    document.getElementById('quote-container').innerText = quote;
+  fetch('/data').then(response => response.json()).then((data) => {
+    let idx=Math.floor(Math.random()*3);
+    document.getElementById('quote-container').innerText =data.quotes[idx];
   });
 }
+

@@ -14,6 +14,8 @@
 
 package com.google.sps.servlets;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,9 +26,31 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+ private List<String> quotes;
+
+  @Override
+  public void init() {
+    quotes = new ArrayList<>();
+    quotes.add("I'm Ruobing");
+    quotes.add(
+        "A ship in port is safe, but that is not what ships are for. "
+            + "Sail out to sea and do new things. - Grace Hopper");
+    quotes.add("Those who can imagine anything, can create the impossible. - Alan Turing");
+  }
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;");
-    response.getWriter().println("Hello Ruobing!");
+    String json="{\"quotes\":[";
+    for(int i=0;i<quotes.size();i++){
+        if(i!=0)
+            json+=",";
+        json+="\"";
+        json+=quotes.get(i);
+        json+="\"";
+    }
+    json+="]}";
+    System.out.print(json);  
+    response.getWriter().println(json);
   }
 }
