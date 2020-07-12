@@ -29,7 +29,7 @@ function addRandomGreeting() {
 
 function getData() {
   fetch('/data').then(response => response.json()).then((data) => {
-    //console.log(data);
+    console.log(data);
     let txt="";
     for(let i=0;i<data.quotes.length;i++)
         txt+=data.quotes[i]+"\n";
