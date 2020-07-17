@@ -27,11 +27,15 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  String lang="en";
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;");
@@ -40,13 +44,18 @@ public class DataServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
     String json="{\"quotes\":[";
     int count=0;
+    Translate translate = TranslateOptions.getDefaultInstance().getService();
+
     for (Entity entity : results.asIterable()) {
         String cc = (String) entity.getProperty("contents");
         if(count!=0)
             json+=",";
         count++;
         json+="\"";
-        json+=cc;
+        Translation translation =
+        translate.translate(cc, Translate.TranslateOption.targetLanguage(lang));
+        String translatedText = translation.getTranslatedText();
+        json+=translatedText;
         json+="\"";
     }
     json+="]}";
@@ -57,6 +66,7 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String value = request.getParameter("comment");
+    lang=request.getParameter("lang");
     long timestamp = System.currentTimeMillis();
     if (value!="") {
       Entity taskEntity = new Entity("comment");
