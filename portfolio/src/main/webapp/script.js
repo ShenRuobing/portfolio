@@ -28,11 +28,12 @@ function addRandomGreeting() {
 }
 
 function getData() {
-  fetch('/data').then(response => response.json()).then((data) => {
+  fetch('/data').then(response=>{ console.log(response); return response.json()}).then((data) => {
     console.log(data);
     let txt="";
     for(let i=0;i<data.quotes.length;i++)
         txt+=data.quotes[i]+"\n";
+    //txt+="你好";
     //console.log("text is:"+txt);
     document.getElementById('quote-container').innerText = txt;
     document.getElementById('pics').innerHTML='\

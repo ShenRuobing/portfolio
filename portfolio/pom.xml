@@ -38,6 +38,11 @@
     <artifactId>google-cloud-translate</artifactId>
     <version>1.70.0</version>
     </dependency>
+    <dependency>
+    <groupId>gtranslateapi</groupId>
+    <artifactId>gtranslateapi</artifactId>
+    <version>1.0</version>
+    </dependency>
   </dependencies>
 
   <build>

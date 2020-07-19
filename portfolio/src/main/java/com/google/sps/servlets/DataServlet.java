@@ -27,15 +27,36 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
-import com.google.cloud.translate.Translate;
-import com.google.cloud.translate.TranslateOptions;
-import com.google.cloud.translate.Translation;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
   String lang="en";
+
+  private static String translate(String langFrom, String langTo, String text) throws IOException {
+    String urlStr = "https://script.google.com/macros/s/AKfycbxgVb7AIKWfHumJdvQ2B9cYLqQTHdq4h6mpSKsIJcncgHkpGKI/exec" +
+            "?q=" + URLEncoder.encode(text, "UTF-8") +
+            "&target=" + langTo +
+            "&source=" + langFrom;
+    URL url = new URL(urlStr);
+    StringBuilder response = new StringBuilder();
+    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+    con.setRequestProperty("User-Agent", "Mozilla/5.0");
+    BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+    String inputLine;
+    while ((inputLine = in.readLine()) != null) {
+        response.append(inputLine);
+    }
+    in.close();
+    return response.toString();
+  }
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;");
@@ -44,22 +65,25 @@ public class DataServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
     String json="{\"quotes\":[";
     int count=0;
-    Translate translate = TranslateOptions.getDefaultInstance().getService();
-
+    String text="";
     for (Entity entity : results.asIterable()) {
         String cc = (String) entity.getProperty("contents");
         if(count!=0)
             json+=",";
         count++;
+        if(lang.equals("en"))
+            text=cc;
+        else
+            text=translate("en", lang, cc);
+        //text="你好";
+        String newText = new String(text.getBytes("utf-8"),"utf-8");
         json+="\"";
-        Translation translation =
-        translate.translate(cc, Translate.TranslateOption.targetLanguage(lang));
-        String translatedText = translation.getTranslatedText();
-        json+=translatedText;
+        json+=newText;
         json+="\"";
     }
     json+="]}";
     System.out.print(json);  
+    response.setContentType("text/JavaScript; charset=utf-8");
     response.getWriter().println(json);
   }
 
@@ -68,7 +92,7 @@ public class DataServlet extends HttpServlet {
     String value = request.getParameter("comment");
     lang=request.getParameter("lang");
     long timestamp = System.currentTimeMillis();
-    if (value!="") {
+    if (!value.equals("")) {
       Entity taskEntity = new Entity("comment");
       taskEntity.setProperty("contents", value);
       taskEntity.setProperty("timestamp", timestamp);
