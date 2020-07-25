@@ -32,12 +32,14 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import com.google.sps.data.QuotesContainer;
+import com.google.gson.Gson;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  String lang="en";
+  String lang = "en";
 
   private static String translate(String langFrom, String langTo, String text) throws IOException {
     String urlStr = "https://script.google.com/macros/s/AKfycbxgVb7AIKWfHumJdvQ2B9cYLqQTHdq4h6mpSKsIJcncgHkpGKI/exec" +
@@ -63,26 +65,19 @@ public class DataServlet extends HttpServlet {
     Query query = new Query("comment").addSort("timestamp", SortDirection.ASCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
-    String json="{\"quotes\":[";
-    int count=0;
-    String text="";
+    QuotesContainer qc = new QuotesContainer();
+    String text = "";
     for (Entity entity : results.asIterable()) {
         String cc = (String) entity.getProperty("contents");
-        if(count!=0)
-            json+=",";
-        count++;
         if(lang.equals("en"))
-            text=cc;
+            text = cc;
         else
-            text=translate("en", lang, cc);
-        //text="你好";
+            text = translate("en", lang, cc);
         String newText = new String(text.getBytes("utf-8"),"utf-8");
-        json+="\"";
-        json+=newText;
-        json+="\"";
+        qc.addQuotes(newText);
     }
-    json+="]}";
-    System.out.print(json);  
+    Gson gson = new Gson();
+    String json = gson.toJson(qc);
     response.setContentType("text/JavaScript; charset=utf-8");
     response.getWriter().println(json);
   }
