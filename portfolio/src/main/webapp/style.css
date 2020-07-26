@@ -1,9 +1,23 @@
 #content {
   margin-left: auto;
   margin-right: auto;
-  width: 650px;
+  width: 900px;
+}
+
+#bar {
+  height: 100px;
+  width:100%;
+  background-color: #39C5BB;   
 }
 
 #greeting-container {
   margin-top: 20px;
+}
+
+#basics{
+    display: flex;
+}
+
+#basics-sub{
+    margin-left:100px;
 }
